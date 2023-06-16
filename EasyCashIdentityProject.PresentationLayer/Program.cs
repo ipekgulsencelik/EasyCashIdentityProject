@@ -1,3 +1,6 @@
+using EasyCashIdentityProject.DataAccessLayer.Concrete;
+using EasyCashIdentityProject.EntityLayer.Concrete;
+
 namespace EasyCashIdentityProject.PresentationLayer
 {
     public class Program
@@ -9,7 +12,10 @@ namespace EasyCashIdentityProject.PresentationLayer
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
-            var app = builder.Build();
+			builder.Services.AddDbContext<Context>();
+			builder.Services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<Context>();
+
+			var app = builder.Build();
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
@@ -24,7 +30,9 @@ namespace EasyCashIdentityProject.PresentationLayer
 
             app.UseRouting();
 
-            app.UseAuthorization();
+			app.UseAuthentication();
+
+			app.UseAuthorization();
 
             app.MapControllerRoute(
                 name: "default",
