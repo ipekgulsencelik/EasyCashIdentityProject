@@ -19,8 +19,10 @@ namespace EasyCashIdentityProject.PresentationLayer.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult Index(string currency)
         {
+            ViewBag.myCurrency = currency;
+
             return View();
         }
 
